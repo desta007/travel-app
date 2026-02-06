@@ -38,11 +38,14 @@ class HomeController extends Controller
             ->limit(4)
             ->get();
 
+        $countries = Destination::active()->distinct()->pluck('country')->sort()->values();
+
         return view('home', compact(
             'featuredDestinations',
             'featuredActivities',
             'featuredHotels',
-            'popularDestinations'
+            'popularDestinations',
+            'countries'
         ));
     }
 

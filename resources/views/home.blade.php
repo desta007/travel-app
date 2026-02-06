@@ -35,37 +35,52 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <form action="{{ route('search') }}" method="GET" class="bg-white p-4 rounded-3 shadow-sm">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Where to?</label>
-                            <input type="text" class="form-control" name="q" placeholder="Search destinations..." value="{{ request('q') }}">
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-semibold">Type</label>
-                            <select class="form-select" name="type">
-                                <option value="all" {{ request('type') == 'all' ? 'selected' : '' }}>All</option>
-                                <option value="destinations" {{ request('type') == 'destinations' ? 'selected' : '' }}>Destinations</option>
-                                <option value="activities" {{ request('type') == 'activities' ? 'selected' : '' }}>Activities</option>
-                                <option value="hotels" {{ request('type') == 'hotels' ? 'selected' : '' }}>Hotels</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-semibold">Country</label>
-                            <select class="form-select" name="country">
-                                <option value="">All Countries</option>
-                                @foreach($countries ?? [] as $country)
-                                    <option value="{{ $country }}" {{ request('country') == $country ? 'selected' : '' }}>{{ $country }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-search me-2"></i>Search
-                            </button>
-                        </div>
+                <div class="filter-card">
+                    <div class="filter-card-header">
+                        <i class="fas fa-search me-2"></i>Find Your Next Adventure
                     </div>
-                </form>
+                    <div class="filter-card-body">
+                        <form action="{{ route('search') }}" method="GET">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-lg-4 col-md-6">
+                                    <label class="filter-label">
+                                        <i class="fas fa-map-marker-alt me-1"></i>Where to?
+                                    </label>
+                                    <div class="filter-input-wrapper">
+                                        <input type="text" class="form-control filter-input" name="q" placeholder="Search destinations, activities, hotels..." value="{{ request('q') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <label class="filter-label">
+                                        <i class="fas fa-layer-group me-1"></i>Type
+                                    </label>
+                                    <select class="form-select filter-input" name="type">
+                                        <option value="all" {{ request('type') == 'all' ? 'selected' : '' }}>All Types</option>
+                                        <option value="destinations" {{ request('type') == 'destinations' ? 'selected' : '' }}>Destinations</option>
+                                        <option value="activities" {{ request('type') == 'activities' ? 'selected' : '' }}>Activities</option>
+                                        <option value="hotels" {{ request('type') == 'hotels' ? 'selected' : '' }}>Hotels</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <label class="filter-label">
+                                        <i class="fas fa-globe me-1"></i>Country
+                                    </label>
+                                    <select class="form-select filter-input" name="country">
+                                        <option value="">All Countries</option>
+                                        @foreach($countries as $countryItem)
+                                            <option value="{{ $countryItem }}" {{ request('country') == $countryItem ? 'selected' : '' }}>{{ $countryItem }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <button type="submit" class="btn btn-search-filter w-100">
+                                        <i class="fas fa-search me-2"></i>Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -322,6 +337,80 @@
 
 .card:hover .card-img-top {
     transform: scale(1.05);
+}
+
+/* Filter Card (same as search page) */
+.filter-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    border: 1px solid rgba(102, 126, 234, 0.08);
+}
+
+.filter-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+.filter-card-body {
+    padding: 1.5rem;
+}
+
+.filter-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.filter-label i {
+    color: #667eea;
+    font-size: 0.75rem;
+}
+
+.filter-input {
+    border: 2px solid #e8ecf4;
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background: #f8f9fc;
+}
+
+.filter-input:focus {
+    border-color: #667eea;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.filter-input::placeholder {
+    color: #a0aec0;
+}
+
+.btn-search-filter {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-search-filter:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
 }
 </style>
 @endpush
