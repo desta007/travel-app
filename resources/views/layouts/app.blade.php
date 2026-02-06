@@ -103,65 +103,68 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-5 mt-5">
-        <div class="container">
+    <footer class="footer-premium mt-5">
+        <!-- Decorative top border -->
+        <div class="footer-top-accent"></div>
+        
+        <div class="container py-5">
             <div class="row">
                 <div class="col-lg-4 mb-4">
-                    <h5 class="fw-bold mb-3">
+                    <h5 class="footer-brand fw-bold mb-3">
                         <i class="fas fa-globe-asia me-2"></i>TravelApp
                     </h5>
-                    <p class="text-muted">Discover amazing destinations, book activities, and find the perfect hotels for your next adventure.</p>
-                    <div class="d-flex gap-3">
-                        <a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-light"><i class="fab fa-youtube"></i></a>
+                    <p class="footer-desc">Discover amazing destinations, book activities, and find the perfect hotels for your next adventure.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="#" class="footer-social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="footer-social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="footer-social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="footer-social-link"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="fw-bold mb-3">Destinations</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('search', ['country' => 'Japan']) }}" class="text-muted text-decoration-none">Japan</a></li>
-                        <li><a href="{{ route('search', ['country' => 'Thailand']) }}" class="text-muted text-decoration-none">Thailand</a></li>
-                        <li><a href="{{ route('search', ['country' => 'Indonesia']) }}" class="text-muted text-decoration-none">Indonesia</a></li>
-                        <li><a href="{{ route('search', ['country' => 'Singapore']) }}" class="text-muted text-decoration-none">Singapore</a></li>
+                    <h6 class="footer-heading fw-bold mb-3">Destinations</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{{ route('search', ['country' => 'Japan']) }}">Japan</a></li>
+                        <li><a href="{{ route('search', ['country' => 'Thailand']) }}">Thailand</a></li>
+                        <li><a href="{{ route('search', ['country' => 'Indonesia']) }}">Indonesia</a></li>
+                        <li><a href="{{ route('search', ['country' => 'Singapore']) }}">Singapore</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="fw-bold mb-3">Activities</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Adventure']) }}" class="text-muted text-decoration-none">Adventure</a></li>
-                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Culture']) }}" class="text-muted text-decoration-none">Culture</a></li>
-                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Food']) }}" class="text-muted text-decoration-none">Food Tours</a></li>
-                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Nature']) }}" class="text-muted text-decoration-none">Nature</a></li>
+                    <h6 class="footer-heading fw-bold mb-3">Activities</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Adventure']) }}">Adventure</a></li>
+                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Culture']) }}">Culture</a></li>
+                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Food']) }}">Food Tours</a></li>
+                        <li><a href="{{ route('search', ['type' => 'activities', 'category' => 'Nature']) }}">Nature</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="fw-bold mb-3">Support</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">Help Center</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Contact Us</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                    <h6 class="footer-heading fw-bold mb-3">Support</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="fw-bold mb-3">Company</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">About Us</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Careers</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Press</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Blog</a></li>
+                    <h6 class="footer-heading fw-bold mb-3">Company</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
+            <div class="footer-divider my-4"></div>
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <p class="text-muted mb-0">&copy; {{ date('Y') }} TravelApp. All rights reserved.</p>
+                    <p class="footer-copyright mb-0">&copy; {{ date('Y') }} TravelApp. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p class="text-muted mb-0">Made with <i class="fas fa-heart text-danger"></i> for travelers</p>
+                    <p class="footer-copyright mb-0">Made with <i class="fas fa-heart footer-heart"></i> for travelers</p>
                 </div>
             </div>
         </div>
