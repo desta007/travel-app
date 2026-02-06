@@ -106,6 +106,16 @@ class ReviewController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Decode JSON strings for pros and cons (sent as JSON from hidden inputs)
+        if ($request->has('pros') && is_string($request->input('pros'))) {
+            $decoded = json_decode($request->input('pros'), true);
+            $request->merge(['pros' => is_array($decoded) ? $decoded : []]);
+        }
+        if ($request->has('cons') && is_string($request->input('cons'))) {
+            $decoded = json_decode($request->input('cons'), true);
+            $request->merge(['cons' => is_array($decoded) ? $decoded : []]);
+        }
+
         $validated = $request->validate([
             'type' => 'required|in:destination,activity,hotel',
             'id' => 'required|integer',
@@ -115,7 +125,7 @@ class ReviewController extends Controller
             'pros' => 'nullable|array',
             'cons' => 'nullable|array',
             'recommended_for' => 'nullable|array',
-            'travel_date' => 'nullable|date|before:today',
+            'travel_date' => 'nullable|date|before_or_equal:today',
             'travel_type' => 'nullable|string|max:100',
             'images' => 'nullable|array|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',

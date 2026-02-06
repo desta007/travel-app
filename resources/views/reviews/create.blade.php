@@ -55,6 +55,33 @@
             </div>
             @endif
 
+            <!-- Flash Messages -->
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
+            <!-- Validation Errors -->
+            @if($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i><strong>Please fix the following errors:</strong>
+                <ul class="mb-0 mt-2">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
             <!-- Review Form -->
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white border-0">
@@ -70,15 +97,15 @@
                             <!-- Rating -->
                             <div class="col-12">
                                 <label class="form-label fw-semibold">Overall Rating <span class="text-danger">*</span></label>
+                                <input type="hidden" name="rating" id="rating-value" value="{{ old('rating', '') }}">
                                 <div class="rating-input mb-3">
                                     @for($i = 1; $i <= 5; $i++)
-                                        <input type="radio" name="rating" value="{{ $i }}" id="rating{{ $i }}" 
-                                               class="d-none" {{ old('rating') == $i ? 'checked' : '' }}>
-                                        <label for="rating{{ $i }}" class="rating-star">
+                                        <span class="rating-star" data-value="{{ $i }}">
                                             <i class="fas fa-star"></i>
-                                        </label>
+                                        </span>
                                     @endfor
                                 </div>
+                                <div class="rating-text text-muted small mb-1" id="rating-text"></div>
                                 @error('rating')
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
@@ -240,13 +267,15 @@
     transition: color 0.2s ease;
 }
 
-.rating-star:hover,
-.rating-star:hover ~ .rating-star {
+.rating-star .fa-star {
+    color: inherit !important;
+}
+
+.rating-star.active {
     color: #ffc107;
 }
 
-.rating-input input:checked ~ .rating-star,
-.rating-input input:checked ~ .rating-star ~ .rating-star {
+.rating-star.hover {
     color: #ffc107;
 }
 
@@ -289,11 +318,55 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Rating stars
+    const ratingLabels = {
+        1: 'Poor',
+        2: 'Fair',
+        3: 'Good',
+        4: 'Very Good',
+        5: 'Excellent'
+    };
+
     const ratingStars = document.querySelectorAll('.rating-star');
-    ratingStars.forEach((star, index) => {
+    const ratingInput = document.getElementById('rating-value');
+    const ratingText = document.getElementById('rating-text');
+    let currentRating = parseInt(ratingInput.value) || 0;
+
+    // Set initial state if old value exists
+    if (currentRating > 0) {
+        highlightStars(currentRating);
+        ratingText.textContent = ratingLabels[currentRating] || '';
+    }
+
+    function highlightStars(rating) {
+        ratingStars.forEach((star) => {
+            const val = parseInt(star.getAttribute('data-value'));
+            star.classList.toggle('active', val <= rating);
+        });
+    }
+
+    ratingStars.forEach((star) => {
+        // Hover: preview stars
+        star.addEventListener('mouseenter', function() {
+            const hoverVal = parseInt(this.getAttribute('data-value'));
+            ratingStars.forEach((s) => {
+                const val = parseInt(s.getAttribute('data-value'));
+                s.classList.toggle('hover', val <= hoverVal);
+            });
+        });
+
+        // Mouse leave: remove hover preview
+        star.addEventListener('mouseleave', function() {
+            ratingStars.forEach((s) => s.classList.remove('hover'));
+        });
+
+        // Click: set rating
         star.addEventListener('click', function() {
-            const rating = index + 1;
-            document.querySelector(`input[name="rating"][value="${rating}"]`).checked = true;
+            currentRating = parseInt(this.getAttribute('data-value'));
+            ratingInput.value = currentRating;
+            highlightStars(currentRating);
+            if (ratingText) {
+                ratingText.textContent = ratingLabels[currentRating] || '';
+            }
         });
     });
 
